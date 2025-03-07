@@ -31,6 +31,10 @@ Volt::route('shipping-methods', 'shipping-methods')
     ->middleware(['auth', 'verified'])
     ->name('shipping-methods');
 
+Volt::route('shipping-methods-radio-cards', 'shipping-methods-radio-cards')
+    ->middleware(['auth', 'verified'])
+    ->name('shipping-methods-radio-cards');
+
 Volt::route('shipping-options', 'shipping-options')
     ->middleware(['auth', 'verified'])
     ->name('shipping-options');
