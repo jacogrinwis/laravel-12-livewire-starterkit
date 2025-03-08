@@ -8,48 +8,30 @@ new class extends Component {
     use WithPagination;
 
     public $tableId = 'default';
-
     public $model;            
-
     public $columns = [];      
-
     public $searchable = [];  
-
     public $sortable = [];    
-   
     public $search = '';
-
     public $sortField = 'created_at';
-
     public $sortDirection = 'desc';
-
     public $perPage = 10;
-   
     public $actions = true;
-
     public $showAction = true;
-
     public $editAction = true;
-
     public $deleteAction = true;
-   
     public $createEvent = 'create-item';
-
     public $showEvent = 'show-item';
-
     public $editEvent = 'edit-item';
-
     public $deleteEvent = 'delete-item';
-
     public $showCreateButton = false;
-
     public $createButtonText = 'Create';
-
     public $createButtonIcon = 'plus';
-
     public $createModalName = '';
-
     public $formatters = [];
+    
+    // Change the property name to avoid conflict with the with() method
+    public $eagerLoad = [];
 
     public function create()
     {
@@ -89,6 +71,21 @@ new class extends Component {
 
     public function formatValue($item, $key)
     {
+        // Handle relationship properties with dot notation (e.g., carrier.name)
+        if (str_contains($key, '.')) {
+            $parts = explode('.', $key);
+            $value = $item;
+           
+            foreach ($parts as $part) {
+                if (is_null($value)) {
+                    return null;
+                }
+                $value = $value->{$part};
+            }
+           
+            return $value;
+        }
+
         // If a custom formatter exists for this column, use it
         if (isset($this->formatters[$key]) && is_callable($this->formatters[$key])) {
             return call_user_func($this->formatters[$key], $item, $key);
@@ -112,12 +109,28 @@ new class extends Component {
     public function getDataProperty()
     {
         $query = $this->model::query();
+
+        // Use eagerLoad property instead of with
+        if (!empty($this->eagerLoad)) {
+            $query->with($this->eagerLoad);
+        }
        
         // Apply search filters if search is not empty and searchable columns exist
         if (!empty($this->search) && !empty($this->searchable)) {
             $query->where(function($q) {
                 foreach ($this->searchable as $column) {
-                    $q->orWhere($column, 'like', '%' . $this->search . '%');
+                    // Check if column contains a relationship reference
+                    if (str_contains($column, '.')) {
+                        $parts = explode('.', $column);
+                        $relationship = $parts[0];
+                        $field = $parts[1];
+                        
+                        $q->orWhereHas($relationship, function($query) use ($field) {
+                            $query->where($field, 'like', '%' . $this->search . '%');
+                        });
+                    } else {
+                        $q->orWhere($column, 'like', '%' . $this->search . '%');
+                    }
                 }
             });
         }

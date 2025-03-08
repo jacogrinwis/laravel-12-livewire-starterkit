@@ -42,6 +42,8 @@
                 <div>
                     <flux:heading size="lg">{{ $label }}</flux:heading>
                     <flux:subheading>{{ $description }}</flux:subheading>
+
+                    {{ $slot }}
                 </div>
             </div>
         @else

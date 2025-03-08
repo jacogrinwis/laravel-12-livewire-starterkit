@@ -19,12 +19,12 @@
                 </flux:navlist.group>
 
                 <flux:navlist.group expandable heading="Shipping" class="hidden lg:grid">
-                    <flux:navlist.item icon="flag" :href="route('shipping-zones')" :current="request()->routeIs('manage-zones')" wire:navigate>{{ __('Zones') }}</flux:navlist.item>
-                    <flux:navlist.item icon="truck" :href="route('shipping-carriers')" :current="request()->routeIs('manage-carriers')" wire:navigate>{{ __('Carriers') }}</flux:navlist.item>
-                    <flux:navlist.item icon="envelope" :href="route('shipping-methods')" :current="request()->routeIs('shipping-methods')" wire:navigate>{{ __('Methods') }}</flux:navlist.item>
-                    <flux:navlist.item icon="envelope" :href="route('shipping-methods-radio-cards')" :current="request()->routeIs('shipping-methods-radio-cards')" wire:navigate>{{ __('Methods Radio Cards') }}</flux:navlist.item>
-                    <flux:navlist.item icon="list-bullet" :href="route('shipping-options')" :current="request()->routeIs('shipping-options')" wire:navigate>{{ __('Options') }}</flux:navlist.item>
-                    <flux:navlist.item icon="calculator" :href="route('shipping-calculator')" :current="request()->routeIs('shipping-calculator')" wire:navigate>{{ __('Calculator') }}</flux:navlist.item>
+                    <flux:navlist.item icon="flag" :href="route('zones')" :current="request()->routeIs('zones')" wire:navigate>{{ __('Zones') }}</flux:navlist.item>
+                    <flux:navlist.item icon="truck" :href="route('carriers')" :current="request()->routeIs('carriers')" wire:navigate>{{ __('Carriers') }}</flux:navlist.item>
+                    <flux:navlist.item icon="envelope" :href="route('methods')" :current="request()->routeIs('methods')" wire:navigate>{{ __('Methods') }}</flux:navlist.item>
+                    {{-- <flux:navlist.item icon="envelope" :href="route('shipping-methods-radio-cards')" :current="request()->routeIs('shipping-methods-radio-cards')" wire:navigate>{{ __('Methods Radio Cards') }}</flux:navlist.item> --}}
+                    {{-- <flux:navlist.item icon="list-bullet" :href="route('shipping-options')" :current="request()->routeIs('shipping-options')" wire:navigate>{{ __('Options') }}</flux:navlist.item> --}}
+                    {{-- <flux:navlist.item icon="calculator" :href="route('shipping-calculator')" :current="request()->routeIs('shipping-calculator')" wire:navigate>{{ __('Calculator') }}</flux:navlist.item> --}}
                 </flux:navlist.group>
             </flux:navlist>
 

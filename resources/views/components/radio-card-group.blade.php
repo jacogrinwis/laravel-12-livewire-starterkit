@@ -1,18 +1,16 @@
 @props([
-    'name' => '',
-    'columns' => 2,
     'label' => null,
 ])
 
-@isset($label)
+@if($label)
     <div>
-        <flux:label>{{ $label }}</flux:label>
-@endisset
+        <flux:label class="mb-2!">{{ $label }}</flux:label>
+@endif
 
-<ul class="grid md:grid-cols-{{ $columns }} gap-4">
+<ul {{ $attributes->merge(['class' => 'grid gap-4']) }}>
     {{ $slot }}
 </ul>
 
-@isset($label)
+@if($label)
     </div>
-@endisset
+@endif

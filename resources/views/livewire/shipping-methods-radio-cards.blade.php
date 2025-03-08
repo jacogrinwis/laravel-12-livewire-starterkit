@@ -1,30 +1,41 @@
 <?php
 
 use Livewire\Volt\Component;
+use App\Models\ShippingMethode;
 
 new class extends Component {
-    //
+    public function with(): array
+    {
+        return [
+            'shippingMethods' => ShippingMethode::with('shippingZone')->get(),
+        ];
+    }
 }; ?>
 
-@php
-    $labelBaseClasses = 'inline-flex justify-between items-start gap-3 p-5 w-full rounded-lg border';
-    $labelLightClasses = 'bg-white group-has-checked:bg-zinc-50 border-zinc-200 group-has-checked:border-black';
-    $labelDarkClasses = 'dark:bg-zinc-700 dark:group-has-checked:bg-zinc-600 dark:border-zinc-600 group-has-checked:dark:border-white';
-    $checkboxBaseClasses = 'flex items-center justify-center shrink-0 size-[1.25rem] text-sm rounded-full border shadow-xs';
-    $checkboxLightClasses = 'bg-white border-zinc-200 group-has-checked:bg-black';
-    $checkboxDarkClasses = 'dark:bg-zinc-600 dark:border-zinc-500 group-has-checked:dark:bg-white';
-    $checkboxInnerBaseClasses = 'hidden group-has-checked:block size-2 rounded-full';
-    $checkboxInnerLightClasses = 'bg-white';
-    $checkboxInnerDarkClasses = 'dark:bg-black';
-    $checkboxIconBaseClasses = 'shrink-0 mt-0.5 shrink-0 inline-block';
-    $checkboxIconLightClasses = 'fill-zinc-400 group-has-checked:fill-black';
-    $checkboxIconDarkClasses = 'group-has-checked:dark:fill-white';
-@endphp
+<div class="max-w-7xl space-y-6 @container">
 
-<div class="max-w-3xl space-y-6">
-
-    <x-radio-card-group name="shipping-method" :columns="2">
-        <x-radio-card
+    <x-radio-card-group name="shipping-method" label="Shipping methods" class="@lg:grid-cols-2 @4xl:grid-cols-3">
+        @foreach ($shippingMethods as $shippingMethod)
+            <x-radio-card
+                id="standard-shipping-{{ $shippingMethod->id }}"
+                name="shipping-method"
+                value="{{ $shippingMethod->id }}"
+                icon="shield-check"
+                label="{{ $shippingMethod->name }}"
+                description="{{ $shippingMethod->shippingCarrier->name }} {{ $shippingMethod->shippingCarrier->shippingZone->name }}"
+                :checked="$loop->first"
+            >
+                <dl class="mt-2 text-sm text-black dark:text-white">
+                    <dt>Max-size:</dt>
+                    <dd>{{ $shippingMethod->formattedMaxSize }}</dd>
+                </dl>
+                <ol class="text-sm text-gray-500">
+                    <li>{{ $shippingMethod->formattedMaxSize }}</li>
+                </ol>
+            </x-radio-card>
+            {{-- @dump($shippingMethod) --}}
+        @endforeach
+        {{-- <x-radio-card
             id="standard-shipping"
             name="shipping-method"
             value="standard"
@@ -66,7 +77,7 @@ new class extends Component {
         >
             <flux:heading size="lg" class="mt-0!">Super Turbo Verzending</flux:heading>
             <flux:subheading>Levering binnen 7-14 werkdagen</flux:subheading>
-        </x-radio-card>
+        </x-radio-card> --}}
     </x-radio-card-group>
 
     {{-- <ul class="grid md:grid-cols-2 gap-4">
