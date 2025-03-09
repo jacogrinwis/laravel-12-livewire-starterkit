@@ -48,6 +48,18 @@ class Method extends Model
         return $this->zone ? $this->zone->name : '';
     }
 
+    protected function getFormattedPriceAttribute()
+    {
+        return Format::toCurrency($this->price);
+    }
+
+    protected function getFormattedInsuranceValueAttribute()
+    {
+        if ($this->insurance_value) {
+            return Format::toCurrency($this->insurance_value);
+        }
+    }
+
     protected function getFormattedMinSizeAttribute()
     {
         $sizes = [

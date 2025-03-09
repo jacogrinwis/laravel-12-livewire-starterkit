@@ -24,11 +24,11 @@ new class extends Component {
             'name' => 'Name',
             'carrier.name' => 'Carrier',
             'zone.name' => 'Zone', 
-            'price' => 'Price',
+            'formattedPrice' => 'Price',
             'formattedMinSize' => 'Min Size',
             'formattedMaxSize' => 'Max Size',
             'options' => 'Options',
-            'insurance_value' => 'Insurance Value',
+            'formattedInsuranceValue' => 'Insurance Value',
             'created_at' => 'Created',
             'updated_at' => 'Updated'
         ]"
