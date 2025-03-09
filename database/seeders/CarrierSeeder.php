@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Carrier;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class CarrierSeeder extends Seeder
 {
@@ -12,6 +13,21 @@ class CarrierSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $carriers = [
+            ['name' => 'PostNL'],
+            ['name' => 'DHL'],
+            ['name' => 'DPD'],
+            ['name' => 'UPS'],
+            ['name' => 'Homerr'],
+            ['name' => 'bpost'],
+            ['name' => 'Deutsche Post'],
+            ['name' => 'POST Luxembourg'],
+        ];
+
+        foreach ($carriers as $carrier) {
+            Carrier::create([
+                'name' => $carrier['name'],
+            ]);
+        }
     }
 }

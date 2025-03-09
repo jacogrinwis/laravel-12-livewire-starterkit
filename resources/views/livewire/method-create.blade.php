@@ -6,26 +6,69 @@ use App\Models\Zone;
 use Livewire\Volt\Component;
 use Livewire\Attributes\Rule;
 use Livewire\Attributes\Validate;
+use Illuminate\Validation\Rule as ValidationRule;
  
 new class extends Component
 {
+    // public float $zone_id;
+    // public float $carrier_id;
+    // public string $name;
+    // public string $min_length = '';
+    // public string $max_length;
+    // public string $min_width = '';
+    // public string $max_width;
+    // public string $min_height = '';
+    // public string $max_height = '';
+    // public string $min_weight = '';
+    // public string $max_weight = '';
+    // public string $price;
+
+    // #[Rule(['required'])]
+    // public string $options = 'none';
+
+    // #[Rule(['nullable'])]
+    // public ?string $insurance_value = null;
+
+    // public function rules()
+    // {
+    //     $rules = [
+    //         'zone_id' => 'required',
+    //         'carrier_id' => 'required',
+    //         'name' => 'required|unique:methods|min:3|max:250',
+    //         'min_length' => 'nullable',
+    //         'max_length' => 'required',
+    //         'min_width' => 'nullable',
+    //         'max_width' => 'required',
+    //         'min_height' => 'nullable',
+    //         'max_height' => 'nullable',
+    //         'min_weight' => 'nullable',
+    //         'max_weight' => 'required',
+    //         'price' => 'required',
+    //         'options' => 'required'
+    //     ];
+
+    //     if ($this->options === 'insurance') {
+    //         $rules['insurance_value'] = 'required|numeric';
+    //     } else {
+    //         $rules['insurance_value'] = 'nullable';
+    //     }
+
+    //     return $rules;
+    // }
+
     public float $zone_id;
     public float $carrier_id;
     public string $name;
-    public string $min_length = '';
+    public ?string $min_length = null;
     public string $max_length;
-    public string $min_width = '';
+    public ?string $min_width = null;
     public string $max_width;
-    public string $min_height = '';
-    public string $max_height = '';
-    public string $min_weight = '';
-    public string $max_weight = '';
+    public ?string $min_height = null;
+    public ?string $max_height = null;
+    public ?string $min_weight = null;
+    public ?string $max_weight = null;
     public string $price;
-
-    #[Rule(['required'])]
     public string $options = 'none';
-
-    #[Rule(['nullable'])]
     public ?string $insurance_value = null;
 
     public function rules()
@@ -33,7 +76,13 @@ new class extends Component
         $rules = [
             'zone_id' => 'required',
             'carrier_id' => 'required',
-            'name' => 'required|unique:methods|min:3|max:250',
+            'name' => [
+                'required',
+                'min:3',
+                'max:250', 
+                // ValidationRule::unique('methods')
+                'unique:methods',
+            ], 
             'min_length' => 'nullable',
             'max_length' => 'required',
             'min_width' => 'nullable',
@@ -47,7 +96,7 @@ new class extends Component
         ];
 
         if ($this->options === 'insurance') {
-            $rules['insurance_value'] = 'required|numeric';
+            $rules['insurance_value'] = 'required';
         } else {
             $rules['insurance_value'] = 'nullable';
         }
@@ -69,13 +118,6 @@ new class extends Component
         $this->max_weight = toPoint($this->max_weight);
         $this->price = toPoint($this->price);
         $this->insurance_value = toPoint($this->insurance_value);
-
-        // if ($this->options === 'insurance' && is_string($this->insurance_value)) {
-        //     $this->insurance_value = toPoint($this->insurance_value);
-        //     $this->validate([
-        //         'insurance_value' => 'required|numeric'
-        //     ]);
-        // }
  
         Method::create([
             'zone_id' => $this->zone_id,
