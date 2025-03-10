@@ -58,6 +58,16 @@ Volt::route('methods', 'methods')
     ->name('methods');
 
 
+Volt::route('users', 'users')
+    ->middleware(['auth', 'verified'])
+    ->name('users');
+
+
+Volt::route('products', 'products')
+    ->middleware(['auth', 'verified'])
+    ->name('products');
+
+
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');

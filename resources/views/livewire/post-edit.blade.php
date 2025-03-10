@@ -60,19 +60,16 @@ new class extends Component {
             </div>
 
             <flux:input wire:model="title" label="Title" placeholder="Your title" />
+            
+            <flux:field>
+                <flux:label>Slug</flux:label>
+                <flux:input.group>
+                    <flux:input wire:model="slug" placeholder="Your slug" />
 
-            <!-- Input field for post slug with two-way data binding 
-                 The slug is used for SEO-friendly URLs -->
-                 <flux:field>
-                    <flux:label>Slug</flux:label>
-                    {{-- <flux:description>A URL-friendly version of the title that will be used in the post's web address. Contains only lowercase letters, numbers, and hyphens.</flux:description> --}}
-                    <flux:input.group>
-                        <flux:input wire:model="slug" placeholder="Your slug" />
-    
-                        <flux:button wire:click="generateSlug" icon="link">Generate</flux:button>
-                    </flux:input.group>
-                    <flux:description>URL-friendly version of the title used in web addresses with lowercase letters, numbers, and hyphens.</flux:description>
-                </flux:field>
+                    <flux:button wire:click="generateSlug" icon="link">Generate</flux:button>
+                </flux:input.group>
+                <flux:description>URL-friendly version of the title used in web addresses with lowercase letters, numbers, and hyphens.</flux:description>
+            </flux:field>
 
             <flux:textarea wire:model="body" label="Body" placeholder="Your body" />
 

@@ -80,8 +80,7 @@ new class extends Component
                 'required',
                 'min:3',
                 'max:250', 
-                // ValidationRule::unique('methods')
-                'unique:methods',
+                ValidationRule::unique('methods')
             ], 
             'min_length' => 'nullable',
             'max_length' => 'required',

@@ -15,9 +15,13 @@ class CarrierSeeder extends Seeder
     {
         $carriers = [
             ['name' => 'PostNL'],
-            ['name' => 'DHL'],
+            ['name' => 'DHL Parcel'],
             ['name' => 'DPD'],
+            ['name' => 'GLS'],
             ['name' => 'UPS'],
+            ['name' => 'TNT/FedEx'],
+            ['name' => 'TNT'],
+            ['name' => 'ParcelParcel'],
             ['name' => 'Homerr'],
             ['name' => 'bpost'],
             ['name' => 'Deutsche Post'],
