@@ -4,7 +4,7 @@
     'description' => null,
 ])
 
-<div class="p-5 rounded-lg bg-white dark:bg-zinc-600 border border-zinc-200 dark:border-zinc-600 shadow-xs">
+<div {{ $attributes->merge(['class' => 'p-5 rounded-lg bg-white dark:bg-zinc-600 border border-zinc-200 dark:border-zinc-600 shadow-xs']) }}>
     @isset($icon)
         <div class="flex gap-2 w-full">
             <flux:icon name="{{ $icon }}" variant="mini" class="shrink-0 mt-0.5 inline-block fill-zinc-400 dark:fill-zinc-400" />

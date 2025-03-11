@@ -63,8 +63,9 @@ new class extends Component {
         :model="App\Models\Post::class"
         :columns="[
             'title' => 'Title',
-            'body' => 'Body',
-            'slug' => 'Slug',
+            // 'body' => 'Body',
+            // 'slug' => 'Slug',
+            'user_id' => 'User ID',
             'created_at' => 'Created',
             'updated_at' => 'Updated'
         ]"

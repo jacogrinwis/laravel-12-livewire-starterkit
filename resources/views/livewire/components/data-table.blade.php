@@ -1,5 +1,6 @@
 <?php
 
+use App\Support\Format;
 use Livewire\Volt\Component;
 use Livewire\WithPagination;
 use Livewire\Attributes\On;
@@ -75,37 +76,62 @@ new class extends Component {
         if (str_contains($key, '.')) {
             $parts = explode('.', $key);
             $value = $item;
-           
+        
             foreach ($parts as $part) {
                 if (is_null($value)) {
                     return null;
                 }
                 $value = $value->{$part};
             }
-           
+        
             return $value;
         }
 
         // If a custom formatter exists for this column, use it
-        if (isset($this->formatters[$key]) && is_callable($this->formatters[$key])) {
-            return call_user_func($this->formatters[$key], $item, $key);
+        if (isset($this->formatters[$key])) {
+            // If formatter is a string, use predefined formatting
+            if (is_string($this->formatters[$key])) {
+                switch ($this->formatters[$key]) {
+                    case 'currency':
+                        return Format::toCurrency($item->$key);
+                    case 'weight':
+                        return Format::toComma($item->$key) . ' g';
+                    case 'size':
+                        // This is for displaying the formatted size
+                        $sizes = [];
+                        if ($item->length) $sizes[] = Format::toComma($item->length);
+                        if ($item->width) $sizes[] = Format::toComma($item->width);
+                        if ($item->height) $sizes[] = Format::toComma($item->height);
+                        
+                        if (empty($sizes)) {
+                            return '';
+                        }
+                        
+                        return implode(' x ', $sizes) . ' cm';
+                    default:
+                        return $item->$key;
+                }
+            } else if (is_callable($this->formatters[$key])) {
+                // Keep existing callable support
+                return call_user_func($this->formatters[$key], $item, $key);
+            }
         }
-       
+    
         // Default formatting based on value type
         if (isset($item->$key)) {
             // Auto-format Carbon dates using diffForHumans
             if ($item->$key instanceof \Carbon\Carbon) {
                 return $item->$key->diffForHumans();
             }
-           
+        
             // Return unmodified value for other types
             return $item->$key;
         }
-       
+    
         // Return null if property doesn't exist
         return null;
     }
-   
+
     public function getDataProperty()
     {
         $query = $this->model::query();
@@ -114,10 +140,13 @@ new class extends Component {
         if (!empty($this->eagerLoad)) {
             $query->with($this->eagerLoad);
         }
-       
+    
         // Apply search filters if search is not empty and searchable columns exist
         if (!empty($this->search) && !empty($this->searchable)) {
             $query->where(function($q) {
+                // Convert search term for number formats (replace comma with period)
+                $convertedSearch = str_replace(',', '.', $this->search);
+                
                 foreach ($this->searchable as $column) {
                     // Check if column contains a relationship reference
                     if (str_contains($column, '.')) {
@@ -129,18 +158,25 @@ new class extends Component {
                             $query->where($field, 'like', '%' . $this->search . '%');
                         });
                     } else {
-                        $q->orWhere($column, 'like', '%' . $this->search . '%');
+                        // For numeric columns (price, weight, etc.), search using the converted value
+                        if (in_array($column, ['price', 'weight', 'length', 'width', 'height'])) {
+                            $q->orWhere($column, 'like', '%' . $convertedSearch . '%')
+                            ->orWhere($column, 'like', '%' . $this->search . '%'); // Try both formats
+                        } else {
+                            $q->orWhere($column, 'like', '%' . $this->search . '%');
+                        }
                     }
                 }
             });
         }
-       
+    
         // Apply current sort settings
         $query->orderBy($this->sortField, $this->sortDirection);
-       
+    
         // Return paginated results
         return $query->paginate($this->perPage);
     }
+
    
     public function show($id)
     {

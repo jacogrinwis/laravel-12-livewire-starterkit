@@ -101,11 +101,15 @@ new class extends Component {
         <p class="text-lg text-right">€ {{ $price }}</p>
         @if ($available_methods)
         <p class="text-sm font-medium mb-2">Shippin method:</p>
-        <ul class="list-disc list-inside text-zinc-500 dark:text-zinc-400 font-medium">
             @foreach ($available_methods as $method)
-                <li>{{ $method->price }} - {{ $method->name }} ({{ $method->formattedMaxSize }})</li>
+                <x-card 
+                    icon="truck" 
+                    name="{{ $method->name }}" 
+                    description="{{ $method->formattedMaxSize }} - {{ $method->price }}"
+                    class="dark:bg-zinc-700!"
+                >
+                </x-card>
             @endforeach
-            </ul>
         @else
             NO {{ $available_methods}}
         @endif

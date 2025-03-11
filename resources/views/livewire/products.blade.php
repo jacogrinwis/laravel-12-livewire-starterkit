@@ -2,6 +2,7 @@
 
 use App\Models\Product;
 use Livewire\Volt\Component;
+use App\Support\Format;
 
 new class extends Component {
     //
@@ -17,33 +18,20 @@ new class extends Component {
         :model="App\Models\Product::class"
         :columns="[
             'name' => 'Name',
-            'slug' => 'slug',
-            'formattedPrice' => 'Price',
-            'formattedSize' => 'Size',
-            'formattedWeight' => 'Weight',
-            'user_id' => 'user_id',
+            'price' => 'Price',
+            'length' => 'Size',
+            'weight' => 'Weight',
+            'user.name' => 'User',
             'created_at' => 'Created',
             'updated_at' => 'Updated'
         ]"
-        :searchable="[
-            'name', 
-            'slug', 
-            'formattedPrice', 
-            'formattedSize', 
-            'formattedWeight', 
-            'user_id', 
-            'created_at', 
-            'updated_at'
-        ]"
-        :sortable="[
-            'name', 
-            'slug', 
-            'formattedPrice', 
-            'formattedSize', 
-            'formattedWeight', 
-            'user_id', 
-            'created_at', 
-            'updated_at'
+        :eagerLoad="['user']"
+        :searchable="['name', 'price', 'length', 'width', 'height', 'weight', 'user_id', 'created_at', 'updated_at']"
+        :sortable="['name', 'slug', 'price', 'length', 'weight', 'user_id', 'created_at', 'updated_at']"
+        :formatters="[
+            'price' => 'currency',
+            'weight' => 'weight',
+            'length' => 'size'
         ]"
         :showEvent="'show-product'"
         :showAction="true"
