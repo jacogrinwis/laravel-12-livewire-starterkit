@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Post>
@@ -18,7 +18,7 @@ class PostFactory extends Factory
     public function definition(): array
     {
         $title = $this->faker->sentence(6, true);
-        
+
         return [
             'title' => $title,
             'slug' => Str::slug($title),

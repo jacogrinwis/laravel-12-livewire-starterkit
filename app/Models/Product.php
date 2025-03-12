@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use App\Support\Format;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
@@ -46,7 +46,7 @@ class Product extends Model
             Format::toComma($this->height),
         ];
 
-        $sizes = array_filter($sizes, function($value) {
+        $sizes = array_filter($sizes, function ($value) {
             return $value !== null && $value !== '';
         });
 
@@ -54,6 +54,6 @@ class Product extends Model
             return '';
         }
 
-        return implode(' x ', $sizes) . ' cm';
+        return implode(' x ', $sizes).' cm';
     }
 }

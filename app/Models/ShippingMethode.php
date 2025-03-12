@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
+use App\Support\Format;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Support\Format;
 
 class ShippingMethode extends Model
 {
@@ -30,8 +30,8 @@ class ShippingMethode extends Model
 
     protected function getShippingZoneNameAttribute()
     {
-        return $this->shippingCarrier && $this->shippingCarrier->shippingZone 
-            ? $this->shippingCarrier->shippingZone->name 
+        return $this->shippingCarrier && $this->shippingCarrier->shippingZone
+            ? $this->shippingCarrier->shippingZone->name
             : 'N/A';
     }
 
@@ -42,17 +42,17 @@ class ShippingMethode extends Model
 
     protected function getFormattedMaxLengthAttribute()
     {
-        return $this->max_length . ' cm';
+        return $this->max_length.' cm';
     }
 
     protected function getFormattedMaxWidthAttribute()
     {
-        return $this->max_width . ' cm';
+        return $this->max_width.' cm';
     }
 
     protected function getFormattedMaxHeightAttribute()
     {
-        return $this->max_height . ' cm';
+        return $this->max_height.' cm';
     }
 
     protected function getFormattedMaxSizeAttribute()
@@ -63,7 +63,7 @@ class ShippingMethode extends Model
             Format::toComma($this->max_height),
         ];
 
-        $sizes = array_filter($sizes, function($value) {
+        $sizes = array_filter($sizes, function ($value) {
             return $value !== null && $value !== '';
         });
 
@@ -71,12 +71,12 @@ class ShippingMethode extends Model
             return '';
         }
 
-        return implode(' x ', $sizes) . ' cm';
+        return implode(' x ', $sizes).' cm';
     }
 
     protected function getFormattedWeightAttribute()
     {
-        return Format::toComma($this->weight) . ' g';
+        return Format::toComma($this->weight).' g';
     }
 
     protected function getFormattedPriceAttribute()
@@ -100,5 +100,4 @@ class ShippingMethode extends Model
     {
         return $this->belongsTo(ShippingCarrier::class);
     }
-
 }

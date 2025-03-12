@@ -89,7 +89,7 @@ new class extends Component {
             <flux:heading size="lg">{{ $name }}</flux:heading>
             <flux:subheading>/{{ $slug }}</flux:subheading>
         </div>
-        <p class="text-sm text-zinc-500 dark:text-zinc-400 font-medium">Publish by {{ $user_name }} - #{{ $product_id }}</p>
+        <p class="text-xs text-zinc-500 dark:text-zinc-400 font-medium">Publish by {{ $user_name }} - #{{ $product_id }}</p>
         <p>{{ $description }}</p>
         <div>
             <p class="text-sm font-medium mb-2">Details:</p>
@@ -98,9 +98,9 @@ new class extends Component {
                 <li>Weight:  {{ $weight }} g</li>
             </ul>
         </div>
-        <p class="text-lg text-right">€ {{ $price }}</p>
-        @if ($available_methods)
-        <p class="text-sm font-medium mb-2">Shippin method:</p>
+        <p class="text-lg">€ {{ $price }}</p>
+        <p class="text-sm font-medium mb-2">Shipping method:</p>
+        @if (!empty($available_methods) && count($available_methods) > 0)
             @foreach ($available_methods as $method)
                 <x-card 
                     icon="truck" 
@@ -111,7 +111,8 @@ new class extends Component {
                 </x-card>
             @endforeach
         @else
-            NO {{ $available_methods}}
+            <p class="text-red-500 text-sm font-medium ">No shipping methods are available.<br>
+                The product may be too large or too heavy to ship.</p>
         @endif
     </div>
 </flux:modal>

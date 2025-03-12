@@ -9,6 +9,7 @@ use Illuminate\View\Component;
 class RadioCardGroup extends Component
 {
     public $name;
+
     public $columns;
 
     /**

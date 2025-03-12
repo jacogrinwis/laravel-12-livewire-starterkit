@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use App\Support\Format;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Method extends Model
 {
@@ -14,18 +14,18 @@ class Method extends Model
     protected $fillable = [
         'carrier_id',
         'zone_id',
-        'name', 
-        'min_length', 
-        'max_length', 
-        'min_width', 
-        'max_width', 
+        'name',
+        'min_length',
+        'max_length',
+        'min_width',
+        'max_width',
         'min_height',
         'max_height',
-        'min_weight', 
-        'max_weight', 
+        'min_weight',
+        'max_weight',
         'price',
-        'options', 
-        'insurance_value'
+        'options',
+        'insurance_value',
     ];
 
     public function carrier()
@@ -68,7 +68,7 @@ class Method extends Model
             Format::toComma($this->min_height),
         ];
 
-        $sizes = array_filter($sizes, function($value) {
+        $sizes = array_filter($sizes, function ($value) {
             return $value !== null && $value !== '';
         });
 
@@ -76,7 +76,7 @@ class Method extends Model
             return '';
         }
 
-        return implode(' x ', $sizes) . ' cm';
+        return implode(' x ', $sizes).' cm';
     }
 
     protected function getFormattedMaxSizeAttribute()
@@ -87,7 +87,7 @@ class Method extends Model
             Format::toComma($this->max_height),
         ];
 
-        $sizes = array_filter($sizes, function($value) {
+        $sizes = array_filter($sizes, function ($value) {
             return $value !== null && $value !== '';
         });
 
@@ -95,8 +95,6 @@ class Method extends Model
             return '';
         }
 
-        return implode(' x ', $sizes) . ' cm';
+        return implode(' x ', $sizes).' cm';
     }
 }
-
-

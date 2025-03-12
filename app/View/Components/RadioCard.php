@@ -9,10 +9,15 @@ use Illuminate\View\Component;
 class RadioCard extends Component
 {
     public $id;
+
     public $name;
+
     public $value;
+
     public $title;
+
     public $description;
+
     public $checked;
 
     /**

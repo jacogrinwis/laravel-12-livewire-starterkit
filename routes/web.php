@@ -43,8 +43,6 @@ Volt::route('shipping-calculator', 'shipping-calculator')
     ->middleware(['auth', 'verified'])
     ->name('shipping-calculator');
 
-
-
 Volt::route('zones', 'zones')
     ->middleware(['auth', 'verified'])
     ->name('zones');
@@ -57,17 +55,13 @@ Volt::route('methods', 'methods')
     ->middleware(['auth', 'verified'])
     ->name('methods');
 
-
 Volt::route('users', 'users')
     ->middleware(['auth', 'verified'])
     ->name('users');
 
-
 Volt::route('products', 'products')
     ->middleware(['auth', 'verified'])
     ->name('products');
-
-
 
 Route::middleware(['auth'])->group(function () {
     Route::redirect('settings', 'settings/profile');

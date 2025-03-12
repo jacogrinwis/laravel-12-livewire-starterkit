@@ -16,13 +16,13 @@ return new class extends Migration
             $table->foreignId('zone_id')->constrained()->cascadeOnDelete();
             $table->foreignId('carrier_id')->constrained()->cascadeOnDelete();
             $table->string('name');
-            $table->decimal('min_length', 8, 2)->nullable();;
+            $table->decimal('min_length', 8, 2)->nullable();
             $table->decimal('max_length', 8, 2);
-            $table->decimal('min_width', 8, 2)->nullable();;
+            $table->decimal('min_width', 8, 2)->nullable();
             $table->decimal('max_width', 8, 2);
-            $table->decimal('min_height', 8, 2)->nullable();;
-            $table->decimal('max_height', 8, 2)->nullable();;
-            $table->decimal('min_weight', 8, 2)->nullable();;
+            $table->decimal('min_height', 8, 2)->nullable();
+            $table->decimal('max_height', 8, 2)->nullable();
+            $table->decimal('min_weight', 8, 2)->nullable();
             $table->decimal('max_weight', 8, 2);
             $table->decimal('price', 8, 2);
             $table->enum('options', ['none', 'track&trace', 'insurance']);
